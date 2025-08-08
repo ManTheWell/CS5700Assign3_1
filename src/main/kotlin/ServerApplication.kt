@@ -41,7 +41,7 @@ fun Application.module() {
     }
 }
 
-suspend fun subscribe(call: ApplicationCall) {
+private suspend fun subscribe(call: ApplicationCall) {
     val channel = Channel<String>()
     clients.add(channel)
 
@@ -64,7 +64,7 @@ suspend fun subscribe(call: ApplicationCall) {
     }
 }
 
-suspend fun posted(call: ApplicationCall) {
+private suspend fun posted(call: ApplicationCall) {
     val rawInput = call.receive<String>()
 
     try {
@@ -91,7 +91,7 @@ suspend fun posted(call: ApplicationCall) {
     }
 }
 
-suspend fun getById(call: ApplicationCall) {
+private suspend fun getById(call: ApplicationCall) {
     val id = call.parameters["id"]
     val shipment = repositoryManager.getShipment(id!!)
     if (shipment != null) {

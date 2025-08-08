@@ -26,9 +26,8 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
-import javax.net.ssl.HttpsURLConnection
 
-val trackedShipments = mutableStateMapOf<String, SerializedShipment>()
+private val trackedShipments = mutableStateMapOf<String, SerializedShipment>()
 
 @Composable
 @Preview
@@ -60,7 +59,7 @@ fun clientApp() {
     }
 }
 
-fun listenForShipmentUpdates() {
+private fun listenForShipmentUpdates() {
     CoroutineScope(Dispatchers.IO).launch {
         val url = URL("http://localhost:8080/subscribe")
         val conn = withContext(Dispatchers.IO) {
@@ -92,7 +91,7 @@ fun listenForShipmentUpdates() {
     }
 }
 
-suspend fun fetchShipmentById(id: String): SerializedShipment? {
+private suspend fun fetchShipmentById(id: String): SerializedShipment? {
     val client = HttpClient(CIO) {
         install(ContentNegotiation) {
             json()
@@ -108,7 +107,7 @@ suspend fun fetchShipmentById(id: String): SerializedShipment? {
 }
 
 @Composable
-fun createSearchBar() {
+private fun createSearchBar() {
     val trackingID = remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
 
@@ -136,7 +135,7 @@ fun createSearchBar() {
 }
 
 @Composable
-fun createBox(shipment: SerializedShipment) {
+private fun createBox(shipment: SerializedShipment) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
